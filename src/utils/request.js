@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Notify } from 'vant'
 // import store from '@src/store/index'
 // import { getToken } from '@utils/auth'
 
@@ -47,8 +47,7 @@ const requestInterceptor = request.interceptors.request.use(
     return request
   },
   (error) => {
-    Message.error(`网络错误: ${error.message}`)
-    // console.log(error)
+    Notify({type: 'danger', message:`网络错误: ${error.message}` })
     Promise.reject(error)
   }
 )
@@ -60,7 +59,7 @@ request.interceptors.response.use(
   (response) => {
     const { config, status, data } = response
     if (status !== 200) {
-      Message.error(`网络错误, 状态码:${status}`)
+      Notify({type: 'danger', message: `网络错误, 状态码:${status}`})
       return Promise.reject(new Error(`HTTP code is ${status}`))
     } else {
       // 这段代码用于模拟 -10005 和 -10014 的返回状态，已经测试通过
@@ -82,11 +81,11 @@ request.interceptors.response.use(
   },
   (error) => {
     if (error.code === 'ECONNABORTED') {
-      Message.warning('请求超时，请重试')
+      Notify({type: 'warning', message: '请求超时，请重试'})
     } else if (error.response && error.response.status) {
-      Message.error(`网络错误: 状态码 ${error.response.status}`)
+      Notify({type: 'danger', message: `网络错误: 状态码 ${error.response.status}`})
     } else {
-      Message.error(`网络错误: ${error.message}`)
+      Notify({type: 'danger', message: `网络错误: ${error.message}`})
     }
     return Promise.reject(error)
   }
@@ -124,7 +123,7 @@ function handleMsgCode (data, config) {
   }
   // refresh_token 过期，需要重新登录，不显示提示
   if (data.msgCode !== -10014) {
-    Message.error(data.errMsg)
+    Notify({type: 'danger', message: data.errMsg})
   }
   return Promise.reject(data)
 }
