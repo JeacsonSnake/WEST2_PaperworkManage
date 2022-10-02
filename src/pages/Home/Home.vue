@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .home_container {
   font-size: 28px;
 }

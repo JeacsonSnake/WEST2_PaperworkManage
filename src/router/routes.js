@@ -1,3 +1,4 @@
+import Apply from '../pages/Apply/Apply.vue'
 import EvidenceRecord from '../pages/EvidenceRecord/EvidenceRecord.vue'
 import Home from '@/pages/Home/Home.vue'
 import Personal from '../pages/Personal/Personal.vue'
@@ -7,6 +8,10 @@ import UserApprove from '../pages/UserApprove/UserApprove.vue'
 import UserMessage from '../pages/UserMessage/UserMessage.vue'
 
 export default [
+  {
+    path: '/apply',
+    component: Apply
+  },
   {
     path: '/',
     component: Home
@@ -34,5 +39,5 @@ export default [
   {
     path: '/user-message',
     component: UserMessage
-  },
+  }
 ]
