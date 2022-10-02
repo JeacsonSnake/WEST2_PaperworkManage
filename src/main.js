@@ -5,6 +5,7 @@ import store from './store'
 
 import 'reset-css'
 import 'normalize.css'
+require('./plugins/vant')
 
 Vue.config.productionTip = false
 

@@ -9,7 +9,7 @@
     "//": "https://github.com/vuejs/vue-cli/issues/3065#issuecomment-454373989",
     "lint:style": "stylelint --fix \"src/**/*.{vue,css,scss}\""
   },
-   "config": {
+  "config": {
     "commitizen": {
       "path": "node_modules/cz-git"
     }
@@ -22,7 +22,7 @@
     "core-js": "^3.6.4",
     "normalize.css": "^8.0.1",
     "reset-css": "^5.0.1",
-    "vant": "^2.12.12",
+    "vant": "^2.12.50",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
