@@ -1,6 +1,7 @@
 import Apply from '../pages/Apply/Apply.vue'
 import EvidenceRecord from '../pages/EvidenceRecord/EvidenceRecord.vue'
 import Home from '@/pages/Home/Home.vue'
+import Login from '../pages/Login/Login.vue'
 import Personal from '../pages/Personal/Personal.vue'
 import PersonalInformation from '../pages/PersonalInformation/PersonalInformation.vue'
 import UserApplication from '../pages/UserApplication/UserApplication.vue'
@@ -11,6 +12,10 @@ export default [
   {
     path: '/apply',
     component: Apply
+  },
+  {
+    path: '/login',
+    component: Login
   },
   {
     path: '/',
