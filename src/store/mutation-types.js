@@ -1,1 +1,2 @@
 // export const SET_BARRAGE_LIST = 'SET_BARRAGE_LIST'
+export const NAVBAR_APPEAR = 'NAVBAR_APPEAR'

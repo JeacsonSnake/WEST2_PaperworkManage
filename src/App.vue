@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <div>
+    <div v-if="navbarAppear">
       <van-tabbar
         active-color="#ee0a24"
         inactive-color="#000"
@@ -27,10 +27,14 @@
 </template>
 
 <script>
-
 export default {
   setup () {
 
+  },
+  computed: {
+    navbarAppear () {
+      return this.$store.state.navbarAppear
+    }
   }
 
 }
