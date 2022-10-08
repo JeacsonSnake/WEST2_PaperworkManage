@@ -6,6 +6,7 @@ import store from './store'
 import 'reset-css'
 import 'normalize.css'
 require('./plugins/vant')
+require('./plugins/fontAwesomeFonts')
 
 Vue.config.productionTip = false
 
