@@ -11,7 +11,9 @@ import {
   Form,
   Field,
   Swipe,
-  SwipeItem
+  SwipeItem,
+  Icon,
+  NavBar
 } from 'vant'
 
 Vue.use(Button)
@@ -26,3 +28,5 @@ Vue.use(Form)
 Vue.use(Field)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
+Vue.use(Icon)
+Vue.use(NavBar)
