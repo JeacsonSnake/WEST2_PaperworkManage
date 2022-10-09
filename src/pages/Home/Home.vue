@@ -65,6 +65,7 @@
 
       <li
         class="menu_container_item"
+        style="margin-right: 0;"
         @click="toEvidenceRecord()"
       >
         <div class="menu_container_item_icon van-image">
@@ -209,6 +210,10 @@ export default {
           margin-bottom: 2.66667vw;
           font-size: 4vw;
           font-weight: 500;
+        }
+
+        .menu_container_item_content_discription {
+          font-size: 3.46667vw;
         }
       }
     }
