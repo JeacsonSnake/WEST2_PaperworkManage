@@ -13,7 +13,8 @@ import {
   Swipe,
   SwipeItem,
   Icon,
-  NavBar
+  NavBar,
+  Badge
 } from 'vant'
 
 Vue.use(Button)
@@ -30,3 +31,4 @@ Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Icon)
 Vue.use(NavBar)
+Vue.use(Badge)

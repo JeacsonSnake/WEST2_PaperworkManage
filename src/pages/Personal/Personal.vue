@@ -10,35 +10,31 @@
         <div class="personal_container_wrap">
           <div class="info_container">
             <div class="info_container_user">
-              <div class="info_container_user_image van-image van-image--round">
-                <van-image
-                  class="swiper_item_image"
-                  width="100%"
-                  fit="cover"
-                  :src="require('../../assets/images/avatar.jpg')"
-                />
-              </div>
+              <van-image
+                class="avatar_image"
+                fit="cover"
+                round
+                :src="require('../../assets/images/avatar.jpg')"
+              />
 
               <p class="info_container_user_name">
                 庄晨忠
               </p>
 
-              <div class="van-badge__wrapper">
-                <i class="info_container_user_icon van-icon van-icon-envelop-o">
-                  <!---->
-                </i>
-
-                <div class="van-badge van-badge--fixed">
-                  0
-                </div>
-              </div>
+              <van-badge :content="5">
+                <van-icon
+                  name="envelop-o"
+                  size="5.33333vw"
+                />
+              </van-badge>
             </div>
 
             <div class="info_container_banner">
               <div class="info_container_banner_image van-image">
                 <van-image
                   class="swiper_item_image"
-                  width="100%"
+                  width="inherit"
+                  height="inherit"
                   fit="cover"
                   :src="require('../../assets/images/banner1.png')"
                 />
@@ -46,104 +42,37 @@
             </div>
           </div>
 
-          <div class="menu_container personal_container_wrap_menu van-cell-group van-hairline--top-bottom">
-            <div
-              role="button"
-              tabindex="0"
-              class="van-cell van-cell--clickable"
-            >
-              <i class="van-icon van-cell__left-icon">
-                <van-icon
-                  class="swiper_item_image"
-                  :src="require('../../assets/images/xiaoxi.png')"
-                />
-                <!---->
-              </i>
+          <van-cell-group class="menu_container">
+            <van-cell
+              title="我的消息"
+              :icon="require('../../assets/images/xiaoxi.png')"
+              is-link
+              @click="toUserMessage()"
+            />
 
-              <div class="van-cell__title">
-                <span>
-                  我的消息
-                </span>
-              </div>
+            <van-cell
+              title="个人信息"
+              :icon="require('../../assets/images/geren.png')"
+              is-link
+              @click="toPersonalInformation()"
+            />
 
-              <i class="van-icon van-icon-arrow van-cell__right-icon">
-                <!---->
-              </i>
-            </div>
+            <van-cell
+              title="我的申请"
+              :icon="require('../../assets/images/shenqing.png')"
+              is-link
+              @click="toUserApplication()"
+            />
 
-            <div
-              role="button"
-              tabindex="0"
-              class="van-cell van-cell--clickable"
-            >
-              <i class="van-icon van-cell__left-icon">
-                <van-icon
-                  class="swiper_item_image"
-                  :src="require('../../assets/images/geren.png')"
-                />
-                <!---->
-              </i>
-              <div class="van-cell__title">
-                <span>
-                  个人信息
-                </span>
-              </div>
+            <van-cell
+              title="我的审批"
+              :icon="require('../../assets/images/shenpi.png')"
+              is-link
+              @click="toUserApprove()"
+            />
+          </van-cell-group>
 
-              <i class="van-icon van-icon-arrow van-cell__right-icon">
-                <!---->
-              </i>
-            </div>
-
-            <div
-              role="button"
-              tabindex="0"
-              class="van-cell van-cell--clickable"
-            >
-              <i class="van-icon van-cell__left-icon">
-                <van-icon
-                  class="swiper_item_image"
-                  :src="require('../../assets/images/geren.png')"
-                />
-                <!---->
-              </i>
-
-              <div class="van-cell__title">
-                <span>
-                  我的申请
-                </span>
-              </div>
-
-              <i class="van-icon van-icon-arrow van-cell__right-icon">
-                <!---->
-              </i>
-            </div>
-
-            <div
-              role="button"
-              tabindex="0"
-              class="van-cell van-cell--clickable"
-            >
-              <i class="van-icon van-cell__left-icon">
-                <van-icon
-                  class="swiper_item_image"
-                  :src="require('../../assets/images/shenpi.png')"
-                />
-                <!---->
-              </i>
-
-              <div class="van-cell__title">
-                <span>
-                  我的审批
-                </span>
-              </div>
-
-              <i class="van-icon van-icon-arrow van-cell__right-icon">
-                <!---->
-              </i>
-            </div>
-          </div>
-
-          <div class="personal_container_wrap_logout">
+          <div class="logout_container">
             退出登录
           </div>
         </div>
@@ -154,7 +83,34 @@
 
 <script>
 export default {
+  name: 'Personal',
+  data () {
+    return {
 
+    }
+  },
+  methods: {
+    toPersonalInformation () {
+      this.$router.push({
+        path: '/personal-information'
+      })
+    },
+    toUserMessage () {
+      this.$router.push({
+        path: '/user-message'
+      })
+    },
+    toUserApprove () {
+      this.$router.push({
+        path: '/user-approve'
+      })
+    },
+    toUserApplication () {
+      this.$router.push({
+        path: '/user-application'
+      })
+    }
+  }
 }
 </script>
 
@@ -175,6 +131,52 @@ export default {
 
   ::v-deep .van-nav-bar__title {
     color: #fff;
+  }
+
+  .info_container {
+    .info_container_user {
+      display: flex;
+      align-items: center;
+      padding: 4vw 4vw 16vw;
+      background-color: #fff;
+
+      .avatar_image {
+        width: 10.66667vw;
+        height: 10.66667vw;
+      }
+
+      .info_container_user_name {
+        flex: 1;
+        padding: 0 2.66667vw;
+        font-size: 4vw;
+      }
+    }
+
+    .info_container_banner {
+      height: 26.66667vw;
+      margin: -13.33333vw 4vw 0;
+      overflow: hidden;
+      border-radius: 4vw;
+    }
+  }
+
+  .menu_container {
+    margin-top: 5.33333vw;
+    color: #333;
+
+    ::v-deep .van-cell__left-icon {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .logout_container {
+    padding: 4vw 0;
+    margin-top: 5.33333vw;
+    font-size: 3.46667vw;
+    color: #b13a3d;
+    text-align: center;
+    background-color: #fff;
   }
 }
 </style>
