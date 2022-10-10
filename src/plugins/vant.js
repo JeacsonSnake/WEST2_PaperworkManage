@@ -14,7 +14,9 @@ import {
   SwipeItem,
   Icon,
   NavBar,
-  Badge
+  Badge,
+  Toast,
+  PullRefresh
 } from 'vant'
 
 Vue.use(Button)
@@ -32,3 +34,5 @@ Vue.use(SwipeItem)
 Vue.use(Icon)
 Vue.use(NavBar)
 Vue.use(Badge)
+Vue.use(Toast)
+Vue.use(PullRefresh)
