@@ -11,7 +11,7 @@
     <div class="apply_scroll detail_container_view">
       <div class="apply-box">
         <van-overlay
-          :show="show"
+          :show="showOverlay"
         >
           <div class="need_container">
             <div class="need_container_content">
@@ -103,7 +103,7 @@
                   :disabled="dis"
                   round
                   color="#b13a3d"
-                  @click="show = false"
+                  @click="showOverlay = false"
                 >
                   {{ BtnText }}
                 </van-button>
@@ -111,23 +111,24 @@
             </div>
           </div>
         </van-overlay>
-        <van-form @submit="onSubmit">
+        <van-form @submit="onSubmit()">
           <van-field
-            v-model="username"
-            name="用户名"
-            label="用户名"
-            placeholder="用户名"
-            :rules="[{ required: true, message: '请填写用户名' }]"
+            v-model="userName"
+            readonly
+            name="姓名"
+            label="姓名"
+            placeholder="姓名"
+            :rules="[{ required: true, message: '请填写姓名' }]"
           />
 
           <van-field
-            v-model="password"
-            type="password"
-            name="密码"
-            label="密码"
-            placeholder="密码"
-            :rules="[{ required: true, message: '请填写密码' }]"
+            v-model="birthDate"
+            readonly
+            name="出生日期"
+            label="出生日期"
+            placeholder="出生日期"
           />
+
           <div style="margin: 16px;">
             <van-button
               round
@@ -149,17 +150,23 @@
 export default {
   data () {
     return {
-      show: true,
+      showOverlay: true,
       dis: true,
       counter: 2,
       BtnText: '已阅读并同意(3s)',
-      timer: null
+      timer: null,
+      userName: 'dededsaa',
+      birthDate: '1969-03-23'
+
     }
   },
   mounted () {
     this.countDown()
   },
   methods: {
+    onSubmit () {
+      console.log('ddd')
+    },
     toHome () {
       this.$router.push({
         path: '/'
@@ -175,6 +182,7 @@ export default {
         }
       }, 1000)
     }
+
   }
 
 }

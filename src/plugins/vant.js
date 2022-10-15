@@ -16,7 +16,8 @@ import {
   NavBar,
   Badge,
   Toast,
-  PullRefresh
+  PullRefresh,
+  Popup
 } from 'vant'
 
 Vue.use(Button)
@@ -36,3 +37,4 @@ Vue.use(NavBar)
 Vue.use(Badge)
 Vue.use(Toast)
 Vue.use(PullRefresh)
+Vue.use(Popup)
