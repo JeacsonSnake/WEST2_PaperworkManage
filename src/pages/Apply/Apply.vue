@@ -118,16 +118,167 @@
             name="姓名"
             label="姓名"
             placeholder="姓名"
-            :rules="[{ required: true, message: '请填写姓名' }]"
           />
+
+          <van-field
+            name="性别"
+            label="性别"
+            readonly
+          >
+            <template #input>
+              <van-radio-group
+                v-model="gender"
+                direction="horizontal"
+              >
+                <van-radio name="male">
+                  男
+                </van-radio>
+                <van-radio name="female">
+                  女
+                </van-radio>
+              </van-radio-group>
+            </template>
+          </van-field>
 
           <van-field
             v-model="birthDate"
             readonly
             name="出生日期"
             label="出生日期"
-            placeholder="出生日期"
+            placeholder="请填写出生日期"
           />
+
+          <van-field
+            v-model="nativePlace"
+            readonly
+            name="籍贯"
+            label="籍贯"
+            placeholder="请填写籍贯"
+          />
+
+          <van-field
+            v-model="nationality"
+            readonly
+            name="民族"
+            label="民族"
+            placeholder="请填写民族"
+          />
+
+          <van-field
+            v-model="politicalLandscape"
+            readonly
+            name="政治面貌"
+            label="政治面貌"
+            placeholder="请填写政治面貌"
+          />
+
+          <van-field
+            v-model="ridcNum"
+            readonly
+            name="身份证号码"
+            label="身份证号码"
+            placeholder="请填写身份证号码"
+          />
+
+          <van-field
+            v-model="education"
+            readonly
+            name="文化程度"
+            label="文化程度"
+            placeholder="请填写文化程度"
+          />
+
+          <van-field
+            v-model="department"
+            readonly
+            name="工作部门"
+            label="工作部门"
+            placeholder="请填写工作部门"
+          />
+
+          <van-field
+            v-model="jobPosition"
+            readonly
+            name="职务"
+            label="职务"
+            placeholder="请填写职务"
+          />
+
+          <van-field
+            v-model="homeLocate"
+            readonly
+            name="家庭住址"
+            label="家庭住址"
+            placeholder="请填写家庭住址"
+          />
+
+          <van-field
+            v-model="phoneNum"
+            readonly
+            name="联系电话"
+            label="联系电话"
+            placeholder="请填写联系电话"
+          />
+
+          <van-field
+            v-model="emergencyName"
+            readonly
+            name="紧急联系人"
+            label="紧急联系人"
+            placeholder="请填写紧急联系人"
+          />
+
+          <van-field
+            v-model="emergencyPhoneNum"
+            readonly
+            name="紧急联系电话"
+            label="紧急联系电话"
+            placeholder="请填写紧急联系电话"
+          />
+
+          <van-field
+            v-model="passportType"
+            name="选择证件"
+            label="选择证件"
+            placeholder="请选择申请的证件"
+            clickable
+            :rules="[{ required: true }]"
+            @click="showePassportSheet"
+          />
+
+          <van-action-sheet
+            v-model="showPS"
+            cancel-text="确定"
+            @cancel="onPSConfirm"
+          >
+            <van-field name="checkboxGroup">
+              <template #input>
+                <van-checkbox-group
+                  v-model="resultPassportTypeArr"
+                  class="PTFCG"
+                >
+                  <van-cell-group style="width: 100%;">
+                    <van-cell
+                      v-for="(item, index) in passportTypeArr"
+                      :key="item"
+                      clickable
+                      :title="`${item}`"
+                      class="PTFCGC"
+                      @click="toggle(index)"
+                    >
+                      <template #right-icon>
+                        <van-checkbox
+                          ref="checkboxes"
+                          :name="item"
+                          icon-size="5vw"
+                        />
+                      </template>
+                    </van-cell>
+                  </van-cell-group>
+                </van-checkbox-group>
+              </template>
+            </van-field>
+          </van-action-sheet>
 
           <div style="margin: 16px;">
             <van-button
@@ -150,13 +301,29 @@
 export default {
   data () {
     return {
-      showOverlay: true,
+      showOverlay: false,
       dis: true,
       counter: 2,
       BtnText: '已阅读并同意(3s)',
       timer: null,
       userName: 'dededsaa',
-      birthDate: '1969-03-23'
+      birthDate: '1969-03-23',
+      gender: 'male',
+      nativePlace: '福建',
+      nationality: '汉',
+      politicalLandscape: '中国共产党党员',
+      ridcNum: '350102196906260411',
+      education: '硕士学位',
+      department: '福州大学纪委 (监察专员办公室)综合室、纪检监察室',
+      jobPosition: '研究员（教育管理）',
+      homeLocate: '暂无',
+      phoneNum: '12345678765',
+      emergencyName: '',
+      emergencyPhoneNum: '',
+      passportType: '',
+      passportTypeArr: ['外交护照', '公务护照', '普通护照', '港澳通行证', '台湾通行证', '双程证'],
+      resultPassportTypeArr: [],
+      showPS: false
 
     }
   },
@@ -181,6 +348,38 @@ export default {
           this.dis = false
         }
       }, 1000)
+    },
+    showePassportSheet () {
+      this.showPS = true
+    },
+    onPSConfirm () {
+      const sortArray = []
+      const sortedArray = []
+      let sortedArrayIndex = 0
+      for (let sort = 0; sort < this.resultPassportTypeArr.length; sort++) {
+        for (let search = 0; search < this.passportTypeArr.length; search++) {
+          if (this.passportTypeArr[search] === this.resultPassportTypeArr[sort]) {
+            sortArray[search] = this.resultPassportTypeArr[sort]
+          }
+        }
+      }
+      this.resultPassportTypeArr.splice(0)
+      for (let index = 0; index < sortArray.length; index++) {
+        if (sortArray[index] != null) {
+          sortedArray[sortedArrayIndex] = sortArray[index]
+          this.resultPassportTypeArr[sortedArrayIndex] = sortArray[index]
+          sortedArrayIndex++
+        }
+      }
+      this.passportType = sortedArray[0]
+      for (let index = 1; index < sortedArray.length; index++) {
+        this.passportType += ', '
+        const element = sortedArray[index]
+        this.passportType += element
+      }
+    },
+    toggle (index) {
+      this.$refs.checkboxes[index].toggle()
     }
 
   }
@@ -246,6 +445,33 @@ export default {
 
       .need_container_content_btn {
         text-align: center;
+      }
+    }
+
+    .PTFCG {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2.33333vw 0;
+
+      .PTFCGC {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        padding: 3.33333vw 0;
+
+        ::v-deep .van-cell__title {
+          display: flex;
+          justify-content: flex-start;
+          padding: 0 0 0 3vw;
+          font-size: 20px;
+        }
+
+        ::v-deep .van-checkbox {
+          padding-left: 35.333333vw;
+        }
       }
     }
   }
