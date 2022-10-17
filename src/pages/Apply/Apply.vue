@@ -249,6 +249,7 @@
           <van-action-sheet
             v-model="showPS"
             cancel-text="确定"
+            :close-on-click-overlay="false"
             @cancel="onPSConfirm"
           >
             <van-field name="checkboxGroup">
@@ -279,6 +280,56 @@
               </template>
             </van-field>
           </van-action-sheet>
+
+          <div
+            v-for="(item, index) in resultPassportArr"
+            :key="index"
+          >
+            <van-field
+              v-model="item.passportName"
+              readonly
+              name="申领证件名称"
+              label="申领证件名称"
+              placeholder="请填写申领证件名称"
+              @click="toggle(index)"
+            />
+
+            <van-field
+              v-model="item.passportNum"
+              readonly
+              name="证照号码"
+              label="证照号码"
+              placeholder="请填写证照号码"
+              @click="toggle(index)"
+            />
+
+            <van-field
+              v-model="item.isNewPassport"
+              readonly
+              name="是否新证"
+              label="是否新证"
+              placeholder="请选择是否新证"
+              @click="toggle(index)"
+            />
+
+            <van-field
+              v-model="item.startTime"
+              readonly
+              name="开始时间"
+              label="开始时间"
+              placeholder="请选择开始时间"
+              @click="toggle(index)"
+            />
+
+            <van-field
+              v-model="item.endTime"
+              readonly
+              name="结束时间"
+              label="结束时间"
+              placeholder="请选择结束时间"
+              @click="toggle(index)"
+            />
+          </div>
 
           <div style="margin: 16px;">
             <van-button
@@ -323,6 +374,17 @@ export default {
       passportType: '',
       passportTypeArr: ['外交护照', '公务护照', '普通护照', '港澳通行证', '台湾通行证', '双程证'],
       resultPassportTypeArr: [],
+      presetPassportObj: {
+        passportName: '',
+        passportNum: '无',
+        isNewPassport: '是',
+        startTime: '',
+        endTime: '',
+        destinationCity: '',
+        detailDestnation: '',
+        useReason: ''
+      },
+      resultPassportArr: [],
       showPS: false
 
     }
@@ -364,10 +426,14 @@ export default {
         }
       }
       this.resultPassportTypeArr.splice(0)
+      let tempObj = {}
       for (let index = 0; index < sortArray.length; index++) {
         if (sortArray[index] != null) {
-          sortedArray[sortedArrayIndex] = sortArray[index]
-          this.resultPassportTypeArr[sortedArrayIndex] = sortArray[index]
+          tempObj = { ...this.presetPassportObj } // 深拷贝（重点！）
+          sortedArray.push(sortArray[index])
+          tempObj.passportName = sortedArray[sortedArrayIndex]
+          this.resultPassportArr.push(tempObj)
+          this.resultPassportTypeArr.push(sortArray[index])
           sortedArrayIndex++
         }
       }
