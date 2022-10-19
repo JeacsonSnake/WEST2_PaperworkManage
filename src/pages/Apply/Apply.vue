@@ -291,7 +291,6 @@
               name="申领证件名称"
               label="申领证件名称"
               placeholder="请填写申领证件名称"
-              @click="toggle(index)"
             />
 
             <van-field
@@ -300,7 +299,6 @@
               name="证照号码"
               label="证照号码"
               placeholder="请填写证照号码"
-              @click="toggle(index)"
             />
 
             <van-field
@@ -309,25 +307,64 @@
               name="是否新证"
               label="是否新证"
               placeholder="请选择是否新证"
-              @click="toggle(index)"
             />
 
             <van-field
-              v-model="item.startTime"
+              v-model="item.startDate"
               readonly
               name="开始时间"
               label="开始时间"
-              placeholder="请选择开始时间"
-              @click="toggle(index)"
+              placeholder="请选择证照开始使用时间"
+              clickable
+              :rules="[{ required: true }]"
+              @click="showePassportStartTime"
+            />
+
+            <van-calendar
+              v-model="showPST"
+              :close-on-click-overlay="false"
+              @confirm="onConfirmPST(...arguments, item.passportCode)"
             />
 
             <van-field
-              v-model="item.endTime"
+              v-model="item.endDate"
               readonly
               name="结束时间"
               label="结束时间"
-              placeholder="请选择结束时间"
-              @click="toggle(index)"
+              placeholder="请选择证照结束使用时间"
+              clickable
+              :rules="[{ required: true }]"
+              @click="showePassportEndTime"
+            />
+
+            <van-calendar
+              v-model="showPET"
+              :close-on-click-overlay="false"
+              :min-date="item.minDate"
+              :max-date="item.maxDate"
+              @confirm="onConfirmPET"
+            />
+
+            <van-field
+              v-model="item.destinationCountry"
+              readonly
+              name="前往国家"
+              label="前往国家"
+              placeholder="请选择前往国家"
+            />
+
+            <van-field
+              v-model="item.detailDestnation"
+              name="具体地点"
+              label="具体地点"
+              placeholder="请输入具体地点"
+            />
+
+            <van-field
+              v-model="item.useReason"
+              name="使用事由"
+              label="使用事由"
+              placeholder="请输入使用事由"
             />
           </div>
 
@@ -375,17 +412,22 @@ export default {
       passportTypeArr: ['外交护照', '公务护照', '普通护照', '港澳通行证', '台湾通行证', '双程证'],
       resultPassportTypeArr: [],
       presetPassportObj: {
+        passportCode: '',
         passportName: '',
         passportNum: '无',
         isNewPassport: '是',
-        startTime: '',
-        endTime: '',
-        destinationCity: '',
+        startDate: '',
+        endDate: '',
+        destinationCountry: '',
         detailDestnation: '',
-        useReason: ''
+        useReason: '',
+        minDate: new Date(),
+        maxDate: new Date()
       },
       resultPassportArr: [],
-      showPS: false
+      showPS: false,
+      showPST: false,
+      showPET: false
 
     }
   },
@@ -414,9 +456,16 @@ export default {
     showePassportSheet () {
       this.showPS = true
     },
+    showePassportStartTime () {
+      this.showPST = true
+    },
+    showePassportEndTime () {
+      this.showPET = true
+    },
     onPSConfirm () {
       const sortArray = []
       const sortedArray = []
+      this.resultPassportArr = []
       let sortedArrayIndex = 0
       for (let sort = 0; sort < this.resultPassportTypeArr.length; sort++) {
         for (let search = 0; search < this.passportTypeArr.length; search++) {
@@ -431,6 +480,8 @@ export default {
         if (sortArray[index] != null) {
           tempObj = { ...this.presetPassportObj } // 深拷贝（重点！）
           sortedArray.push(sortArray[index])
+          tempObj.passportCode = sortedArrayIndex
+          console.log('index, tempObj.passportCode', index, tempObj.passportCode)
           tempObj.passportName = sortedArray[sortedArrayIndex]
           this.resultPassportArr.push(tempObj)
           this.resultPassportTypeArr.push(sortArray[index])
@@ -444,8 +495,32 @@ export default {
         this.passportType += element
       }
     },
+    onConfirmPST (date, index) {
+      this.showPST = false
+      console.log('date, index', date, index)
+      console.log('this.resultPassportArr[index].maxDate', this.resultPassportArr[index].maxDate)
+      console.log('this.resultPassportArr[index].minDate', this.resultPassportArr[index].minDate)
+      this.resultPassportArr[index].minDate = date
+      this.resultPassportArr[index].maxDate.setFullYear(date.getFullYear() + 5)
+      this.resultPassportArr[index].maxDate.setMonth(11)
+      this.resultPassportArr[index].maxDate.setDate(31)
+      console.log('修改后 this.resultPassportArr[index].maxDate', this.resultPassportArr[index].maxDate)
+      console.log('修改后 this.resultPassportArr[index].minDate', this.resultPassportArr[index].minDate)
+      this.resultPassportArr[index].startDate = this.formatDate(date)
+    },
+    onConfirmPET (date) {
+      console.log('eeee')
+      this.showPST = false
+      this.resultPassportArr.endDate = this.formatDate(date)
+    },
+    formatDate (date) {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    },
     toggle (index) {
       this.$refs.checkboxes[index].toggle()
+    },
+    sayHelo () {
+      console.log('helo')
     }
 
   }
@@ -473,7 +548,7 @@ export default {
   }
 
   .detail_container_view {
-    height: calc(var(--vh, 1vh) * 100 - 12.26667vw);
+    height: auto;
     overflow: hidden;
 
     .need_container {

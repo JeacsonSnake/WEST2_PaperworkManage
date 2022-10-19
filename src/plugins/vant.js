@@ -22,7 +22,8 @@ import {
   RadioGroup,
   Checkbox,
   CheckboxGroup,
-  ActionSheet
+  ActionSheet,
+  Calendar
 } from 'vant'
 
 Vue.use(Button)
@@ -48,3 +49,4 @@ Vue.use(RadioGroup)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(ActionSheet)
+Vue.use(Calendar)
